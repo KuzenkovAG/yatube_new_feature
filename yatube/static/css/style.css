@@ -47,6 +47,29 @@ header {
 
 
 /*---------------
+    Comments
+---------------*/
+
+.media-body a {
+    color: #000000;
+    text-decoration: none;
+}
+.media-body date {
+    color: #787878;
+    text-decoration: none;
+}
+
+.media-body .comment-owner {
+    margin-bottom: 0px;
+    font-size: 0.9em;
+}
+
+.media-body .comment-body {
+    font-size: 0.9em;
+    color: #158a47;
+}
+
+/*---------------
     User Profile
 ---------------*/
 
