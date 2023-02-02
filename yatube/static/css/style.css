@@ -1,0 +1,148 @@
+/*----------------------------*\
+	Header
+\*----------------------------*/
+
+header {
+    margin-bottom: 25px;
+}
+
+.navbar {
+    background-color: #e3f2fd;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #4d95ff;
+}
+
+.nav .nav-item a {
+    color: #50565f;
+}
+
+.navbar a {
+    color: #50565f;
+}
+
+.nav .nav-item a:hover {
+    color: #4b73f8;
+}
+
+.navbar li {
+    list-style: none;
+}
+
+/*----------------------------*\
+	        Body
+\*----------------------------*/
+
+
+.pagination {
+    margin: auto;
+}
+
+.wrap_images img
+{
+    width: 100%;
+    height: auto;
+}
+
+
+/*---------------
+    User Profile
+---------------*/
+
+.pofile-body {
+    margin-top: 60px;
+    margin-bottom: 10px;
+}
+
+.profile-category a {
+    font-size: 16px;
+    color: #009CF0;
+    text-decoration: none;
+}
+
+.profile-category .active {
+    font-weight: bold;
+}
+
+.profile-category a:hover {
+    font-size: 17px;
+}
+
+
+
+/*----------------------------*\
+	        About
+\*----------------------------*/
+
+#about-form {
+    background-image: url(../img/fon-author.jpg) repeat-y;
+    margin-top:60px;
+}
+
+#img-author {
+    height: 30vh;
+    width: auto;
+}
+
+.figure-caption {
+    text-align: center;
+}
+
+#about-header h1 {
+    margin: 40px;
+    text-align: center;
+}
+
+#about-text {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 5%
+}
+
+
+#about-text .card .card-body li {
+    list-style: none;
+}
+
+#about-text .card .card-body ul {
+    list-style: none;
+    padding-left: 10px;
+}
+
+#img-author-photo {
+    height: 15vh;
+    width: auto;
+}
+
+#author-task {
+    color: #bbbdc9;
+}
+
+/*----------------------------*\
+	        Technology
+\*----------------------------*/
+
+#tech-header h1 {
+    text-align: center;
+}
+
+#tech-aside list-group {
+    border: none;
+}
+
+#list-example {
+    border: none;
+}
+
+.scrollspy-example {
+    position: relative;
+    height: 70vh;
+    margin-top: 0.5rem;
+    overflow: auto;
+}
+
+.low-margin {
+    margin: 0px;
+}
+

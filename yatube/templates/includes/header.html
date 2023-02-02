@@ -1,0 +1,150 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+
+    <a class="navbar-brand" href="{% url 'posts:index' %}">
+      <img src="{% static 'img/logo.png' %}" width="30" height="30"
+           class="d-inline-block align-top" alt="">
+      <span style="color:red">Ya</span>tube
+    </a>
+    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarContent" aria-controls="navbarToggleExternalContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span>
+         <img src="{% static 'svg/layout-text-sidebar.svg' %}" width="30">
+      </span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end"
+         id="navbarContent">
+      <ul class="nav nav-pills flex-column flex-lg-row">
+        {% with request.resolver_match.view_name as view_name %}
+        <li class="nav-item">
+          <a class="nav-link
+            {% if view_name == 'about:author' %}
+              active
+            {% endif %}"
+             href="{% url 'about:author' %}"
+          >
+            Об авторе
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link
+            {% if view_name == 'about:tech' %}
+              active
+            {% endif %}"
+             href="{% url 'about:tech' %}"
+          >
+            Технологии
+          </a>
+        </li>
+
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link
+            {% if view_name == 'posts:post_create' %}
+              active
+            {% endif %}"
+             href="{% url 'posts:post_create' %}"
+          >
+            Опубликовать запись
+          </a>
+        </li>
+        <li class="nav-item d-lg-none">
+          <a class="nav-link link-light
+            {% if view_name == 'users:password_change' %}
+              active
+            {% endif %}"
+             href="{% url 'user_profile:index' %}"
+          >
+            Данные пользователя
+          </a>
+        </li>
+        <li class="nav-item d-lg-none">
+          <a class="nav-link link-light"
+             href="{% url 'posts:profile' user.username %}"
+          >
+            Мои записи
+          </a>
+        </li>
+        <li class="nav-item d-lg-none">
+          <a class="nav-link link-light" href="{% url 'users:logout' %}">
+            Выйти
+          </a>
+        </li>
+        <li class="d-lg-none">
+          Пользователь: {{ user.username }}
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link link-light
+            {% if view_name == 'users:login' %}
+              active
+            {% endif %}"
+             href="{% url 'users:login' %}"
+          >
+            Войти
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link-light
+            {% if view_name == 'users:signup' %}
+              active
+            {% endif %}"
+             href="{% url 'users:signup' %}"
+          >
+            Регистрация
+          </a>
+        </li>
+        {% endif %}
+        {% endwith %}
+      </ul>
+
+
+
+      <!-- Hiden in less lg mode-->
+      {% if user.is_authenticated %}
+      <div class="d-none d-lg-block">
+        <li class="nav-item dropdown {% if view_name == 'user:profile' %}active{% endif %}">
+          <a class="nav-link dropdown-toggle" href=""
+             id="navbarDropdown" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+            {{ user.username }}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" href="{% url 'user_profile:index' %}">
+                Данные пользователя
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'posts:profile' user.username %}">
+                Мои записи
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'user_profile:follows' %}">
+                Мои подписки
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'user_profile:followers' %}">
+                Мои подписчики
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item" href="{% url 'users:logout' %}">
+                Выход
+              </a>
+            </li>
+          </ul>
+        </li>
+      </div>
+      {% endif %}
+
+    </div>
+    <!-- collapse -->
+  </div>
+</nav>

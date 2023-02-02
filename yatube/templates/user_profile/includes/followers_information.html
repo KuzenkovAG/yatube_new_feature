@@ -1,0 +1,47 @@
+{% load static %}
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Подписчик</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  {% if followers %}
+  {% for follower, is_followed in related_follows.items %}
+  <tr>
+    <th scope="row">{{ forloop.counter }}</th>
+    <td>
+      <a href="{% url 'posts:profile' follower.user.username %}">
+        {% if follower.user.first_name or follower.user.last_name %}
+        {{ follower.user.first_name }} {{ follower.user.last_name }}
+        {% else %}
+        {{ follower.user.username }}
+        {% endif %}
+      </a>
+    </td>
+    <td>
+      {% if is_followed %}
+      <a href="{% url 'posts:profile_unfollow' follower.user.username %}"
+         class="btn btn-light btn-sm" role="button"
+      >
+        Отписаться
+      </a>
+      {% else %}
+      <a href="{% url 'posts:profile_follow' follower.user.username %}"
+         class="btn btn-primary btn-sm" role="button"
+      >
+        Подписаться в ответ
+      </a>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+  {% else %}
+  <tr>
+    <th colspan="3">На вас пока никто не подписан. Размещайте больше интересных постов</th>
+  </tr>
+  {% endif %}
+  </tbody>
+</table>
