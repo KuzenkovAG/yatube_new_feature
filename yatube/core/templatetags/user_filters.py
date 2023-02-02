@@ -16,3 +16,11 @@ def protect_mail(email):
     if len_short_mail >= 5:
         return email[:1] + '***' + email[index-1:]
     return email[:1] + '***' + email[index:]
+
+
+@register.filter
+def cut_post_text(text):
+    """Cut text for long post."""
+    if len(text) > 500:
+        return text[:497] + '...'
+    return text

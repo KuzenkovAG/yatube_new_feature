@@ -1,4 +1,5 @@
 {% load thumbnail %}
+{% load user_filters %}
 <ul>
   {% if request.resolver_match.view_name != 'posts:profile' %}
   <li>
@@ -19,7 +20,9 @@
   <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
   {% endthumbnail %}
 </div>
-<p>{{ post.text }}</p>
+<p>
+  {{ post.text|cut_post_text }}
+</p>
 <a href="{% url 'posts:post_detail' post.id %}">подробная информация</a>
 <br>
 {% if request.resolver_match.view_name != 'posts:group_list' %}
