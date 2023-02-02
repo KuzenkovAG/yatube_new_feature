@@ -18,7 +18,9 @@
     {% endif %}
   </p>
   <p>Логин: {{ user.username }}</p>
+  {% if user.email %}
   <p>email: {{ user.email|protect_mail }}</p>
+  {% endif %}
   <a href="{% url 'user_profile:edit' %}" class="btn btn-primary btn-sm">Изменить данные</a>
   <hr>
   <p>Пароль: ******** </p>
