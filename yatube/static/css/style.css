@@ -54,6 +54,7 @@ header {
     color: #000000;
     text-decoration: none;
 }
+
 .media-body date {
     color: #787878;
     text-decoration: none;
@@ -65,13 +66,17 @@ header {
 }
 
 .media-body .comment-body {
-    font-size: 0.9em;
-    color: #158a47;
+    font-size: 0.85em;
+    color: #000000;
 }
 
-/*---------------
+.comment-header {
+    color: #158a47
+}
+
+/*-----------------
     User Profile
----------------*/
+-----------------*/
 
 .pofile-body {
     margin-top: 60px;

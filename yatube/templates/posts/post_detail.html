@@ -57,7 +57,7 @@
       </a>
       {% endif %}
       <hr>
-      <h6>Комментарии:</h6>
+      <h6 class="comment-header">Комментарии:</h6>
       {% if not comments %}
       <p>Комментариев еще нет, {% if not user.is_authenticated %}
         <a href="{% url 'users:login' %}">авторизуйтесь</a> и{% endif %} оставьте тут свой.</p>
