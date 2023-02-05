@@ -21,6 +21,6 @@ def protect_mail(email):
 @register.filter
 def cut_post_text(text):
     """Cut text for long post."""
-    if len(text) > 500:
-        return text[:497] + '...'
+    if len(text) > 1000:
+        return text[:997] + '...'
     return text
