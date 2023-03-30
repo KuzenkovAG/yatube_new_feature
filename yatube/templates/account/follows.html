@@ -1,4 +1,12 @@
+{% extends 'account/base.html' %}
 {% load static %}
+
+{% block title %}
+Подписки {{ user.username }}
+{% endblock %}
+
+{% block content %}
+
 <table class="table">
   <thead>
   <tr>
@@ -37,4 +45,4 @@
   {% endif %}
   </tbody>
 </table>
-
+{% endblock %}

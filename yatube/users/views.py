@@ -3,14 +3,14 @@ from django.views.generic import CreateView
 from django.contrib.auth import login, get_user_model
 from django.shortcuts import get_object_or_404, redirect
 
-from .forms import CreationForm
+from .forms import CustomUserCreationForm
 
 User = get_user_model()
 
 
 class SignUp(CreateView):
     """Page for registration of Users"""
-    form_class = CreationForm
+    form_class = CustomUserCreationForm
     success_url = reverse_lazy('posts:index')
     template_name = 'users/signup.html'
 

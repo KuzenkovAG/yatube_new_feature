@@ -3,14 +3,19 @@ from django.contrib.auth.decorators import login_required
 
 from . import views
 
-app_name = 'user_profile'
+app_name = 'account'
 
 urlpatterns = [
-    path('', login_required(views.UserProfile.as_view()), name='index'),
+    path('', login_required(views.UserAccount.as_view()), name='index'),
     path(
         'edit/',
         login_required(views.UserChangeDataView.as_view()),
         name='edit'
+    ),
+    path(
+        'edit_profile/',
+        login_required(views.AccountChangeDataView.as_view()),
+        name='edit_profile'
     ),
     path(
         'follows/',

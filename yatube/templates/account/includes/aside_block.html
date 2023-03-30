@@ -1,0 +1,24 @@
+{% load static %}
+<div class="profile-category">
+  {% with request.resolver_match.view_name as view_name %}
+  <h6>Подписки</h6>
+  <a href="{% url 'account:follows' %}"
+     {% if view_name == 'account:follows' %}class="active"{% endif %}
+  >
+  Мои подписки
+  </a>
+  <br>
+  <a href="{% url 'account:followers' %}"
+     {% if view_name == 'account:followers' %}class="active"{% endif %}
+  >
+  Мои подписчики
+  </a>
+  <br>
+  <h6>Аккаунт</h6>
+  <a href="{% url 'account:index' %}"
+     {% if view_name == 'account:index' %}class="active"{% endif %}
+  >
+  Личные данные
+  </a>
+  {% endwith %}
+</div>
