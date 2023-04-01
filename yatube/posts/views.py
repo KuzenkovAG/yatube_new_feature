@@ -29,7 +29,7 @@ def index(request):
     template = 'posts/index.html'
     posts_list = Post.objects.select_related(
         'author', 'group', 'author__profile').prefetch_related(
-        'comments', 'comments__author').all()
+        'comments', 'comments__author', 'user_likes').all()
     page_obj = create_paginator(request, posts_list, POST_LIMIT)
     return render(request, template, {'page_obj': page_obj})
 
@@ -173,3 +173,29 @@ def profile_unfollow(request, username):
     author = get_user_object(username)
     Follow.objects.filter(user=request.user, author=author).delete()
     return redirect(reverse('posts:profile', args=[username]))
+
+
+@login_required
+def like(request, post_id):
+    """Add like on post."""
+    if request.method == "GET":
+        user = get_object_or_404(User, id=request.user.id)
+        post = get_object_or_404(Post, id=post_id)
+        if user not in post.user_likes.all():
+            post.likes += 1
+            post.user_likes.add(user)
+            post.save()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def dislike(request, post_id):
+    """Remove like from post."""
+    if request.method == "GET":
+        user = get_object_or_404(User, id=request.user.id)
+        post = get_object_or_404(Post, id=post_id)
+        if user in post.user_likes.all():
+            post.likes -= 1
+            post.user_likes.remove(user)
+            post.save()
+    return redirect(request.META.get('HTTP_REFERER'))

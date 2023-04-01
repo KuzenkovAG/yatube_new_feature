@@ -56,12 +56,14 @@ class Post(ModelWithDate):
         upload_to='posts/',
         blank=True,
     )
+    likes = models.PositiveIntegerField(default=0)
+    user_likes = models.ManyToManyField(User)
 
     def __str__(self):
         return self.text[:SHORT_TEXT_LENGTH]
 
     def get_length(self):
-        return len(self.post)
+        return len(self.text)
 
     def get_last_comments(self):
         return self.comments.all()[2::-1]

@@ -17,7 +17,7 @@ def get_user_object(username):
 
 
 class FormCleanMixin:
-    """Check Form clean data."""
+    """Validate text field of Form."""
     def clean_text(self):
         data = self.cleaned_data['text']
         if data is None:

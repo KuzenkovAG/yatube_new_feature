@@ -27,4 +27,6 @@ urlpatterns = [
         views.profile_unfollow,
         name='profile_unfollow'
     ),
+    path('like/<int:post_id>/', views.like, name='like'),
+    path('dislike/<int:post_id>/', views.dislike, name='dislike'),
 ]

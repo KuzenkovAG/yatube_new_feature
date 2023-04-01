@@ -48,7 +48,7 @@
         {% endthumbnail %}
       </div>
       <p>
-        {{ post.text }}
+        {{ post.text|linebreaks }}
       </p>
       {% if post.author.username == user.username %}
       <a class="btn btn-primary"
@@ -78,9 +78,9 @@
             </a>
              {{ comment.created|date:"d E Y H:i:s"  }}
           </p>
-          <p class="comment-body">
-            {{ comment.text }}
-          </p>
+          <div class="comment-body">
+            {{ comment.text|linebreaks }}
+          </div>
         </div>
       </div>
       {% endfor %}

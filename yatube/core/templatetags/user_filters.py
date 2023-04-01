@@ -13,11 +13,3 @@ def addclass(field, css):
 def protect_mail(email):
     index = email.index('@')
     return email[:1] + '*****' + email[index:]
-
-
-@register.filter
-def cut_post_text(text):
-    """Cut text for long post."""
-    if len(text) > 1000:
-        return text[:997] + '...'
-    return text
