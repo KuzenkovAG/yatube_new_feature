@@ -8,54 +8,140 @@
 {% endblock %}
 
 {% block content %}
-<div class="container py-5">
+<div class="container">
   <div class="row">
-    <aside class="col-sm-12 col-md-3">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          Дата публикации: {{ post.created|date:"d E Y" }}
-        </li>
-        {% if post.group %}
-        <li class="list-group-item">
-          Группа: {{ post.group }}
-          <a href="{% url 'posts:group_list' post.group.slug %}">
-            все записи группы
-          </a>
+    <div class="aside-post-detail d-none d-lg-block col-sm-12 col-md-3">
+      <ul class="list-group list-group-flush border-rounded">
+        <li class="list-group-item d-flex justify-content-center">
+          {% if post.author.profile.photo %}
+          <img src="{{ post.author.profile.photo.url }}" width="230" height="auto">
+          {% else %}
+          <img src="{% static 'img/no_name2.png' %}" width="232" height="auto">
           {% endif %}
         </li>
         <li class="list-group-item">
           Автор:
-          {% if post.author.get_full_name %}
-          {{ post.author.get_full_name }}
-          {% else %}
-          {{ post.author.username }}
-          {% endif %}
+          <a href="{% url 'posts:profile' post.author %}">
+            {% if post.author.get_full_name %}
+            {{ post.author.get_full_name|title }}
+            {% else %}
+            {{ post.author.username|title }}
+            {% endif %}
+          </a>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
           Всего постов автора:  <span >{{ post_count }}</span>
         </li>
         <li class="list-group-item">
-          <a href="{% url 'posts:profile' post.author %}">
-            все посты пользователя
+          Дата публикации: {{ post.created|date:"d E Y" }}
+        </li>
+        {% if post.group %}
+        <li class="list-group-item">
+          Группа:
+          <a href="{% url 'posts:group_list' post.group.slug %}">
+            {{ post.group }}
+          </a>
+          {% endif %}
+        </li>
+        {% if post.author.username == user.username %}
+        <li class="list-group-item">
+          <a href="{% url 'posts:post_edit' post.id %}">
+            Редактировать запись
           </a>
         </li>
+        {% endif %}
       </ul>
-    </aside>
-    <article class="col-sm-12 col-md-9">
+    </div>
+
+
+    <div class="d-block d-md-block d-lg-none col-12">
+      <ul class="list-group list-group-flush border-rounded">
+        <li class="list-group-item center d-flex justify-content-center">
+          {% if post.author.profile.photo %}
+          <img src="{{ post.author.profile.photo.url }}" width="230" height="auto">
+          {% else %}
+          <img src="{% static 'img/no_name2.png' %}" width="232" height="auto">
+          {% endif %}
+        </li>
+        <li class="list-group-item">
+          Автор:
+          <a href="{% url 'posts:profile' post.author %}">
+            {% if post.author.get_full_name %}
+            {{ post.author.get_full_name|title }}
+            {% else %}
+            {{ post.author.username|title }}
+            {% endif %}
+          </a>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Всего постов автора:  <span >{{ post_count }}</span>
+        </li>
+        <li class="list-group-item">
+          Дата публикации: {{ post.created|date:"d E Y" }}
+        </li>
+        {% if post.group %}
+        <li class="list-group-item">
+          Группа:
+          <a href="{% url 'posts:group_list' post.group.slug %}">
+            {{ post.group }}
+          </a>
+          {% endif %}
+        </li>
+        {% if post.author.username == user.username %}
+        <li class="list-group-item">
+          <a href="{% url 'posts:post_edit' post.id %}">
+            Редактировать запись
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+
+
+    <div class="post-body col-sm-12 col-lg-8">
+      <p>
+        {{ post.text|linebreaks }}
+      </p>
       <div class="col-sm-12 wrap_images">
         {% thumbnail post.image "960x339" crop="center" as im %}
         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
         {% endthumbnail %}
       </div>
-      <p>
-        {{ post.text|linebreaks }}
-      </p>
-      {% if post.author.username == user.username %}
-      <a class="btn btn-primary"
-         href="{% url 'posts:post_edit' post.id %}">
-        Редактировать запись
-      </a>
-      {% endif %}
+
+
+      <div class="post-footer layout basic">
+        <div class="comment-tag">
+          <a href="{% url 'posts:post_detail' post.id %}">
+            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIEdlbmVyYXRvcjogU1ZHIFJlcG8gTWl4ZXIgVG9vbHMgLS0+CjxzdmcgZmlsbD0iIzAwMDAwMCIgd2lkdGg9IjgwMHB4IiBoZWlnaHQ9IjgwMHB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCjx0aXRsZT5jb21tZW50PC90aXRsZT4NCjxwYXRoIGQ9Ik0xNi41IDIuMzUzYy03Ljg1NyAwLTE0LjI1IDUuNDM4LTE0LjI1IDEyLjEyNCAwLjA0NCAyLjgzNCAxLjE1IDUuNDAyIDIuOTM4IDcuMzNsLTAuMDA2LTAuMDA3Yy0wLjU5NyAyLjYwNS0xLjkwNyA0Ljg0NC0zLjcxMiA2LjU2OWwtMC4wMDUgMC4wMDVjLTAuMTMyIDAuMTM1LTAuMjE0IDAuMzItMC4yMTQgMC41MjUgMCAwLjQxNCAwLjMzNiAwLjc1IDAuNzUgMC43NTFoMGMwLjA1NC0wIDAuMTA3LTAuMDA2IDAuMTU4LTAuMDE3bC0wLjAwNSAwLjAwMWMzLjQ3LTAuNTU5IDYuNTQ2LTEuOTQgOS4xMTktMy45MzZsLTAuMDQ1IDAuMDM0YzEuNTY5IDAuNTUyIDMuMzc4IDAuODcxIDUuMjYyIDAuODcxIDAuMDA0IDAgMC4wMDkgMCAwLjAxMyAwaC0wLjAwMWM3Ljg1NyAwIDE0LjI1LTUuNDM5IDE0LjI1LTEyLjEyNXMtNi4zOTMtMTIuMTI0LTE0LjI1LTEyLjEyNHpNMTYuNSAyNS4xMDJjLTAuMDE2IDAtMC4wMzUgMC0wLjA1NCAwLTEuODMyIDAtMy41ODYtMC4zMzItNS4yMDUtMC45NGwwLjEwMiAwLjAzNGMtMC4wNTgtMC4wMTgtMC4xMjYtMC4wMjktMC4xOTUtMC4wMzBoLTAuMDAxYy0wLjAyMC0wLjAwMi0wLjAzNi0wLjAwOS0wLjA1Ni0wLjAwOSAwIDAtMCAwLTAgMC0wLjE4NSAwLTAuMzU0IDAuMDY4LTAuNDg1IDAuMThsMC4wMDEtMC4wMDFjLTAuMDEwIDAuMDA4LTAuMDI0IDAuMDA0LTAuMDM0IDAuMDEzLTEuNzk3IDEuNTE5LTMuOTcgMi42NTMtNi4zNTcgMy4yNDNsLTAuMTA4IDAuMDIzYzEuMjktMS42MzMgMi4yMTUtMy42MTMgMi42MTktNS43NzdsMC4wMTMtMC4wODNjMC0wLjAwNiAwLTAuMDE0IDAtMC4wMjEgMC0wLjAyMS0wLjAwMS0wLjA0My0wLjAwMy0wLjA2NGwwIDAuMDAzYzAtMC4wMDUgMC0wLjAxMCAwLTAuMDE1IDAtMC4wMTktMC4wMDEtMC4wMzctMC4wMDItMC4wNTVsMCAwLjAwMmMtMC4wMDQtMC4xODEtMC4wNzMtMC4zNDUtMC4xODQtMC40N2wwLjAwMSAwLjAwMS0wLjAxMS0wLjAyN2MtMS43MDQtMS42OTctMi43NjctNC4wMzgtMi43OTEtNi42MjZsLTAtMC4wMDVjMC01Ljg1OCA1LjcyLTEwLjYyNCAxMi43NS0xMC42MjRzMTIuNzUgNC43NjYgMTIuNzUgMTAuNjI0YzAgNS44NTktNS43MTkgMTAuNjI1LTEyLjc1IDEwLjYyNXoiPjwvcGF0aD4NCjwvc3ZnPg=="
+                 alt="" width="22">
+            {{ post.comments.count }}
+          </a>
+        </div>
+
+        <div class="likes-tag">
+          {% if user in post.user_likes.all %}
+          <a href="{% url 'posts:dislike' post.id %}">
+            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIEdlbmVyYXRvcjogU1ZHIFJlcG8gTWl4ZXIgVG9vbHMgLS0+Cjxzdmcgd2lkdGg9IjgwMHB4IiBoZWlnaHQ9IjgwMHB4IiB2aWV3Qm94PSIwIDAgMTIgMTIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDEyIDEyIiBpZD0i0KHQu9C+0LlfMSIgdmVyc2lvbj0iMS4xIiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNOC41LDFDNy41MjA2Mjk5LDEsNi42MzUyNTM5LDEuNDAyMjIxNyw2LDIuMDUwNDc2MUM1LjM2NDgwNzEsMS40MDIyODI3LDQuNDc5MzcwMSwxLDMuNSwxICBDMS41NjcwMTY2LDEsMCwyLjU2NzAxNjYsMCw0LjVTMiw4LDYsMTFjNC0zLDYtNC41NjcwMTY2LDYtNi41UzEwLjQzMjk4MzQsMSw4LjUsMXoiIGZpbGw9IiMxRDFEMUIiLz48L3N2Zz4="
+                 alt="" width="24">
+            {{ post.likes }}
+          </a>
+          {% else %}
+          <a href="{% url 'posts:like' post.id %}">
+            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IlVwbG9hZGVkIHRvIHN2Z3JlcG8uY29tIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiANCgkgd2lkdGg9IjgwMHB4IiBoZWlnaHQ9IjgwMHB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuYmVudGJsb2Nrc19lZW57ZmlsbDojMEIxNzE5O30NCgkuc3Qwe2ZpbGw6IzBCMTcxOTt9DQo8L3N0eWxlPg0KPHBhdGggY2xhc3M9ImJlbnRibG9ja3NfZWVuIiBkPSJNMjEuMDgxLDZDMjMuNzUyLDYuMDMxLDI2LDguNzY2LDI2LDEyYzAsNS4xMDYtNi40NywxMC45NjktMTAuMDAxLDEzLjU5Mw0KCUMxMi40NjYsMjIuOTc0LDYsMTcuMTIsNiwxMmMwLTMuMjM0LDIuMjQ4LTUuOTY5LDQuOTE4LTZDMTMuNTg2LDYuMTc1LDEzLjkyNiw2LjgwMSwxNiw4Ljg3OUMxOC4wNjksNi44MDYsMTguNDE4LDYuMTczLDIxLjA4MSw2DQoJIE0yMC45MTEsNC4wMDZMMjAuOTEyLDRDMTguOTkzLDQsMTcuMjU5LDQuNzg1LDE2LDYuMDQ4QzE0Ljc0MSw0Ljc4NSwxMy4wMDcsNCwxMS4wODgsNGwwLjAwMSwwLjAwNkM3LjA0NCwzLjkzNiw0LDcuNzE5LDQsMTINCgljMCw4LDExLjkzOCwxNiwxMS45MzgsMTZoMC4xMjRDMTYuMDYyLDI4LDI4LDIwLDI4LDEyQzI4LDcuNzEzLDI0Ljk1MSwzLjkzNiwyMC45MTEsNC4wMDZ6Ii8+DQo8L3N2Zz4="
+                 alt="" width="24">
+            {{ post.likes }}
+          </a>
+          {% endif %}
+        </div>
+
+        <div class="views-tag">
+          <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPg0KPHN2ZyB3aWR0aD0iODAwcHgiIGhlaWdodD0iODAwcHgiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iIzAwMDAwMCIgZD0iTTUxMiAxNjBjMzIwIDAgNTEyIDM1MiA1MTIgMzUyUzgzMiA4NjQgNTEyIDg2NCAwIDUxMiAwIDUxMnMxOTItMzUyIDUxMi0zNTJ6bTAgNjRjLTIyNS4yOCAwLTM4NC4xMjggMjA4LjA2NC00MzYuOCAyODggNTIuNjA4IDc5Ljg3MiAyMTEuNDU2IDI4OCA0MzYuOCAyODggMjI1LjI4IDAgMzg0LjEyOC0yMDguMDY0IDQzNi44LTI4OC01Mi42MDgtNzkuODcyLTIxMS40NTYtMjg4LTQzNi44LTI4OHptMCA2NGEyMjQgMjI0IDAgMSAxIDAgNDQ4IDIyNCAyMjQgMCAwIDEgMC00NDh6bTAgNjRhMTYwLjE5MiAxNjAuMTkyIDAgMCAwLTE2MCAxNjBjMCA4OC4xOTIgNzEuNzQ0IDE2MCAxNjAgMTYwczE2MC03MS44MDggMTYwLTE2MC03MS43NDQtMTYwLTE2MC0xNjB6Ii8+PC9zdmc+"
+               alt="" width="24"
+          >
+          0
+        </div>
+      </div>
+
       <hr>
       <h6 class="comment-header">Комментарии:</h6>
       {% if not comments %}
@@ -100,7 +186,7 @@
       </div>
       {% endif %}
 
-    </article>
+    </div>
   </div>
 </div>
 {% endblock %}

@@ -13,11 +13,14 @@ a {
 }
 
 .selectable {
-
 }
 
 .selectable:hover {
 
+}
+
+.border-rounded {
+    border-radius:12px;
 }
 
 /*----------------------------*\
@@ -25,7 +28,7 @@ a {
 \*----------------------------*/
 
 header {
-    margin-bottom: 25px;
+    height: 57px;
 }
 
 .navbar {
@@ -68,6 +71,14 @@ main {
 {
     width: 100%;
     height: auto;
+}
+
+/*--------------------*\
+    Footer
+\*--------------------*/
+
+.footer {
+    background-color: #f4f4f4;
 }
 
 
@@ -122,6 +133,7 @@ main {
 }
 
 .post-footer {
+    margin-top: 1.5%;
     margin-left: 1.5%;
     margin-right: 1.5%;
     height: 30px;
@@ -150,6 +162,17 @@ main {
     left: 50px;
     opacity: 0.7;
 }
+/*---------------
+    Post detail
+---------------*/
+
+.aside-post-detail {
+    position: sticky;
+    top: 60px;
+    height: 470px;
+    margin-top: 1%;
+}
+
 
 /*---------------
     Comments
@@ -285,7 +308,7 @@ main {
 
 
 .error-body {
-    margin-top: 60px;
+
 }
 
 

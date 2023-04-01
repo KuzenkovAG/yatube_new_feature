@@ -5,6 +5,7 @@ from core.models import ModelWithDate
 
 User = get_user_model()
 SHORT_TEXT_LENGTH = settings.SHORT_TEXT_LENGTH
+LAST_COMMENTS = 3
 
 
 class Group(models.Model):
@@ -59,6 +60,9 @@ class Post(ModelWithDate):
     likes = models.PositiveIntegerField(default=0)
     user_likes = models.ManyToManyField(User)
 
+    class Meta:
+        ordering = ("-created",)
+
     def __str__(self):
         return self.text[:SHORT_TEXT_LENGTH]
 
@@ -66,7 +70,11 @@ class Post(ModelWithDate):
         return len(self.text)
 
     def get_last_comments(self):
-        return self.comments.all()[2::-1]
+        """Get last comments."""
+        count = self.comments.count()
+        if count <= LAST_COMMENTS:
+            return self.comments.all()
+        return self.comments.all()[count - LAST_COMMENTS:]
 
 
 class Comment(ModelWithDate):
