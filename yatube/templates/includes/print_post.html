@@ -1,34 +1,116 @@
 {% load thumbnail %}
 {% load user_filters %}
-<ul>
-  {% if request.resolver_match.view_name != 'posts:profile' %}
-  <li>
-    {% if post.author.get_full_name %}
-    Автор: {{ post.author.get_full_name }}
-    {% else %}
-    Автор: {{ post.author }}
+{% load static %}
+<div class="post-body border-gray">
+  <div>
+    <div class="post-header layout basic">
+      {% if post.author.profile.photo %}
+      <img class="rounded-circle border-gray" src="{{ post.author.profile.photo.url }}"
+           width="60" height="60"
+      >
+      {% else %}
+      <img class="rounded-circle border-gray" src="{% static 'img/no_name2.png' %}"
+           width="60" height="60"
+      >
+      {% endif %}
+      <div class="post-author-name layout basic">
+        <a href="{% url 'posts:profile' post.author %}">
+          {% if post.author.get_full_name %}
+          {{ post.author.get_full_name|title }}
+          {% else %}
+          {{ post.author|title }}
+          {% endif %}
+        </a>
+      </div>
+      <div class="post-created-date">
+        {{ post.created|date:"d E Y" }}
+      </div>
+      {% if request.resolver_match.view_name != 'posts:group_list' %}
+      {% if post.group %}
+      <div class="post-group">
+        Группа: <a href="{% url 'posts:group_list' post.group.slug %}">
+        {{ post.group.title }}</a>
+      </div>
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  <div class="post-text">
+    <p>{{ post.text|cut_post_text }}</p>
+    <a href="{% url 'posts:post_detail' post.id %}">
+      {% if post.get_length >= 500 %}
+      Читать полностью..
+      {% else %}
+      Подробнее
+      {% endif %}
+    </a>
+    <div class="col-sm-12 wrap_images">
+      {% thumbnail post.image "960x450" crop="center" as im %}
+      <img src="{{ im.url }}" width="960" height="450">
+      {% endthumbnail %}
+    </div>
+  </div>
+
+  <div class="post-footer layout basic">
+
+    <div class="comment-tag">
+      <a href="{% url 'posts:post_detail' post.id %}">
+        <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIEdlbmVyYXRvcjogU1ZHIFJlcG8gTWl4ZXIgVG9vbHMgLS0+CjxzdmcgZmlsbD0iIzAwMDAwMCIgd2lkdGg9IjgwMHB4IiBoZWlnaHQ9IjgwMHB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCjx0aXRsZT5jb21tZW50PC90aXRsZT4NCjxwYXRoIGQ9Ik0xNi41IDIuMzUzYy03Ljg1NyAwLTE0LjI1IDUuNDM4LTE0LjI1IDEyLjEyNCAwLjA0NCAyLjgzNCAxLjE1IDUuNDAyIDIuOTM4IDcuMzNsLTAuMDA2LTAuMDA3Yy0wLjU5NyAyLjYwNS0xLjkwNyA0Ljg0NC0zLjcxMiA2LjU2OWwtMC4wMDUgMC4wMDVjLTAuMTMyIDAuMTM1LTAuMjE0IDAuMzItMC4yMTQgMC41MjUgMCAwLjQxNCAwLjMzNiAwLjc1IDAuNzUgMC43NTFoMGMwLjA1NC0wIDAuMTA3LTAuMDA2IDAuMTU4LTAuMDE3bC0wLjAwNSAwLjAwMWMzLjQ3LTAuNTU5IDYuNTQ2LTEuOTQgOS4xMTktMy45MzZsLTAuMDQ1IDAuMDM0YzEuNTY5IDAuNTUyIDMuMzc4IDAuODcxIDUuMjYyIDAuODcxIDAuMDA0IDAgMC4wMDkgMCAwLjAxMyAwaC0wLjAwMWM3Ljg1NyAwIDE0LjI1LTUuNDM5IDE0LjI1LTEyLjEyNXMtNi4zOTMtMTIuMTI0LTE0LjI1LTEyLjEyNHpNMTYuNSAyNS4xMDJjLTAuMDE2IDAtMC4wMzUgMC0wLjA1NCAwLTEuODMyIDAtMy41ODYtMC4zMzItNS4yMDUtMC45NGwwLjEwMiAwLjAzNGMtMC4wNTgtMC4wMTgtMC4xMjYtMC4wMjktMC4xOTUtMC4wMzBoLTAuMDAxYy0wLjAyMC0wLjAwMi0wLjAzNi0wLjAwOS0wLjA1Ni0wLjAwOSAwIDAtMCAwLTAgMC0wLjE4NSAwLTAuMzU0IDAuMDY4LTAuNDg1IDAuMThsMC4wMDEtMC4wMDFjLTAuMDEwIDAuMDA4LTAuMDI0IDAuMDA0LTAuMDM0IDAuMDEzLTEuNzk3IDEuNTE5LTMuOTcgMi42NTMtNi4zNTcgMy4yNDNsLTAuMTA4IDAuMDIzYzEuMjktMS42MzMgMi4yMTUtMy42MTMgMi42MTktNS43NzdsMC4wMTMtMC4wODNjMC0wLjAwNiAwLTAuMDE0IDAtMC4wMjEgMC0wLjAyMS0wLjAwMS0wLjA0My0wLjAwMy0wLjA2NGwwIDAuMDAzYzAtMC4wMDUgMC0wLjAxMCAwLTAuMDE1IDAtMC4wMTktMC4wMDEtMC4wMzctMC4wMDItMC4wNTVsMCAwLjAwMmMtMC4wMDQtMC4xODEtMC4wNzMtMC4zNDUtMC4xODQtMC40N2wwLjAwMSAwLjAwMS0wLjAxMS0wLjAyN2MtMS43MDQtMS42OTctMi43NjctNC4wMzgtMi43OTEtNi42MjZsLTAtMC4wMDVjMC01Ljg1OCA1LjcyLTEwLjYyNCAxMi43NS0xMC42MjRzMTIuNzUgNC43NjYgMTIuNzUgMTAuNjI0YzAgNS44NTktNS43MTkgMTAuNjI1LTEyLjc1IDEwLjYyNXoiPjwvcGF0aD4NCjwvc3ZnPg=="
+             alt="" width="22">
+        {{ post.comments.count }}
+      </a>
+    </div>
+
+    <div class="likes-tag">
+      <a href="">
+        <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IlVwbG9hZGVkIHRvIHN2Z3JlcG8uY29tIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiANCgkgd2lkdGg9IjgwMHB4IiBoZWlnaHQ9IjgwMHB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuYmVudGJsb2Nrc19lZW57ZmlsbDojMEIxNzE5O30NCgkuc3Qwe2ZpbGw6IzBCMTcxOTt9DQo8L3N0eWxlPg0KPHBhdGggY2xhc3M9ImJlbnRibG9ja3NfZWVuIiBkPSJNMjEuMDgxLDZDMjMuNzUyLDYuMDMxLDI2LDguNzY2LDI2LDEyYzAsNS4xMDYtNi40NywxMC45NjktMTAuMDAxLDEzLjU5Mw0KCUMxMi40NjYsMjIuOTc0LDYsMTcuMTIsNiwxMmMwLTMuMjM0LDIuMjQ4LTUuOTY5LDQuOTE4LTZDMTMuNTg2LDYuMTc1LDEzLjkyNiw2LjgwMSwxNiw4Ljg3OUMxOC4wNjksNi44MDYsMTguNDE4LDYuMTczLDIxLjA4MSw2DQoJIE0yMC45MTEsNC4wMDZMMjAuOTEyLDRDMTguOTkzLDQsMTcuMjU5LDQuNzg1LDE2LDYuMDQ4QzE0Ljc0MSw0Ljc4NSwxMy4wMDcsNCwxMS4wODgsNGwwLjAwMSwwLjAwNkM3LjA0NCwzLjkzNiw0LDcuNzE5LDQsMTINCgljMCw4LDExLjkzOCwxNiwxMS45MzgsMTZoMC4xMjRDMTYuMDYyLDI4LDI4LDIwLDI4LDEyQzI4LDcuNzEzLDI0Ljk1MSwzLjkzNiwyMC45MTEsNC4wMDZ6Ii8+DQo8L3N2Zz4="
+             alt="" width="24">
+        0
+      </a>
+    </div>
+
+    <div class="views-tag">
+      <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPg0KPHN2ZyB3aWR0aD0iODAwcHgiIGhlaWdodD0iODAwcHgiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iIzAwMDAwMCIgZD0iTTUxMiAxNjBjMzIwIDAgNTEyIDM1MiA1MTIgMzUyUzgzMiA4NjQgNTEyIDg2NCAwIDUxMiAwIDUxMnMxOTItMzUyIDUxMi0zNTJ6bTAgNjRjLTIyNS4yOCAwLTM4NC4xMjggMjA4LjA2NC00MzYuOCAyODggNTIuNjA4IDc5Ljg3MiAyMTEuNDU2IDI4OCA0MzYuOCAyODggMjI1LjI4IDAgMzg0LjEyOC0yMDguMDY0IDQzNi44LTI4OC01Mi42MDgtNzkuODcyLTIxMS40NTYtMjg4LTQzNi44LTI4OHptMCA2NGEyMjQgMjI0IDAgMSAxIDAgNDQ4IDIyNCAyMjQgMCAwIDEgMC00NDh6bTAgNjRhMTYwLjE5MiAxNjAuMTkyIDAgMCAwLTE2MCAxNjBjMCA4OC4xOTIgNzEuNzQ0IDE2MCAxNjAgMTYwczE2MC03MS44MDggMTYwLTE2MC03MS43NDQtMTYwLTE2MC0xNjB6Ii8+PC9zdmc+"
+           alt="" width="24"
+      >
+      0
+    </div>
+
+  </div>
+
+
+  {% if post.comments.count > 0 %}
+  <hr>
+  <div class="post-comments">
+    {% if post.comments.count > 3 %}
+    <div style="margin-top: -8px; margin-bottom: 10px;">
+      <a class="center" href="{% url 'posts:post_detail' post.id %}">
+        Все комментарии
+      </a>
+    </div>
     {% endif %}
-    <a href="{% url 'posts:profile' post.author %}">все посты пользователя</a>
-  </li>
+
+    {% for comment in post.get_last_comments %}
+    <div class="post-comment">
+      <p class="comment-owner">
+        <a href="{% url 'posts:profile' comment.author.username %}"
+           class="comment-owner"
+        >
+          {% if comment.author.get_full_name %}
+          {{ comment.author.get_full_name }}
+          {% else %}
+          {{ comment.author.username }}
+          {% endif %}:
+        </a>
+        <date>{{ comment.created|date:"d E Y H:i:s" }}</date>
+      </p>
+      <p class="comment-body">
+        {{ comment.text }}
+      </p>
+    </div>
+    {% endfor %}
+  </div>
   {% endif %}
-  <li>
-    Дата публикации: {{ post.created|date:"d E Y" }}
-  </li>
-</ul>
-<div class="col-sm-12 wrap_images">
-  {% thumbnail post.image "960x450" crop="center" as im %}
-  <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-  {% endthumbnail %}
+
 </div>
-<p>
-  {{ post.text|cut_post_text }}
-</p>
-<a href="{% url 'posts:post_detail' post.id %}">подробная информация</a>
-<br>
-{% if request.resolver_match.view_name != 'posts:group_list' %}
-{% if post.group %}
-<a href="{% url 'posts:group_list' post.group.slug %}">
-  все записи группы</a>
-{% endif %}
-{% endif %}
-{% if not forloop.last %}<hr>{% endif %}
+

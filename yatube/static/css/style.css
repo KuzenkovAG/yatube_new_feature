@@ -1,3 +1,25 @@
+
+
+
+/*----layout---*/
+.layout.basic>* {
+  position: absolute;
+}
+
+a {
+    color: #2a5885;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.selectable {
+
+}
+
+.selectable:hover {
+
+}
+
 /*----------------------------*\
 	Header
 \*----------------------------*/
@@ -7,7 +29,7 @@ header {
 }
 
 .navbar {
-    background-color: #e3f2fd;
+    background-color: #ffd608;
 }
 
 .nav-pills .nav-link.active {
@@ -34,6 +56,9 @@ header {
 	        Body
 \*----------------------------*/
 
+main {
+    background-color: #f4f4f4;
+}
 
 .pagination {
     margin: auto;
@@ -45,6 +70,86 @@ header {
     height: auto;
 }
 
+
+/*--------------------*\
+    Print Post
+\*--------------------*/
+
+.border-gray {
+    border:0.1px solid #d2d2d2;
+}
+
+.post-body {
+    background-color: #fff;
+    border-radius:12px;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1%;
+    position: relative;
+}
+
+.post-header {
+    margin-top: 1%;
+    margin-left: 2%;
+    margin-right: 2%;
+    height: 70px;
+    position: relative;
+}
+
+.post-author-name {
+    color: #2a5885;
+    top: 5px;
+    left: 70px;
+    width: 200px;
+}
+
+.post-created-date {
+    top: 30px;
+    left: 70px;
+    height: 20px;
+    color: #8d90a9;
+}
+
+.post-text {
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+    margin-bottom: 1.5%;
+}
+
+.post-group {
+    top: 5px;
+    right: 10px;
+}
+
+.post-footer {
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+    height: 30px;
+    margin-bottom: 1%;
+    font-size: 0.85em;
+}
+
+.post-comments {
+    margin-left: 5%;
+    margin-right: 2%;
+    margin-bottom: 1%;
+
+}
+
+.comment-tag {
+    left: 150px;
+    opacity: 0.7;
+}
+
+.views-tag {
+    right: 50px;
+    opacity: 0.5;
+}
+
+.likes-tag {
+    left: 50px;
+    opacity: 0.7;
+}
 
 /*---------------
     Comments
@@ -60,12 +165,12 @@ header {
     text-decoration: none;
 }
 
-.media-body .comment-owner {
+.comment-owner {
     margin-bottom: 0px;
     font-size: 0.9em;
 }
 
-.media-body .comment-body {
+.comment-body {
     font-size: 0.85em;
     color: #000000;
 }

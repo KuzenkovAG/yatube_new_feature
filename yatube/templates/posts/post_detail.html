@@ -76,7 +76,7 @@
               {{ comment.author.username }}
               {% endif %}:
             </a>
-             <date>{{ comment.created|date:"d E Y" }}</date>
+             {{ comment.created|date:"d E Y H:i:s"  }}
           </p>
           <p class="comment-body">
             {{ comment.text }}

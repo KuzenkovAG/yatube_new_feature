@@ -60,6 +60,12 @@ class Post(ModelWithDate):
     def __str__(self):
         return self.text[:SHORT_TEXT_LENGTH]
 
+    def get_length(self):
+        return len(self.post)
+
+    def get_last_comments(self):
+        return self.comments.all()[2::-1]
+
 
 class Comment(ModelWithDate):
     """Comment of post."""

@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container py-5">
+<div class="container py-5 col-12-md col-lg-8">
   {% include 'posts/includes/switcher.html' %}
   {% for post in page_obj %}
   {% include 'includes/print_post.html' %}

@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_page
 from django.urls import reverse, reverse_lazy
 
@@ -9,6 +10,7 @@ from .models import Follow, Group, Post
 from .utils import create_paginator, get_user_object
 
 POST_LIMIT = settings.POST_LIMIT_ON_PAGE
+User = get_user_model()
 
 
 def post_owner_only(func):
@@ -25,7 +27,9 @@ def post_owner_only(func):
 def index(request):
     """Main page."""
     template = 'posts/index.html'
-    posts_list = Post.objects.select_related('author', 'group').all()
+    posts_list = Post.objects.select_related(
+        'author', 'group', 'author__profile').prefetch_related(
+        'comments', 'comments__author').all()
     page_obj = create_paginator(request, posts_list, POST_LIMIT)
     return render(request, template, {'page_obj': page_obj})
 
@@ -33,7 +37,9 @@ def index(request):
 def group_post(request, slug):
     """Page of group."""
     group = get_object_or_404(Group, slug=slug)
-    posts_list = group.posts.all()
+    posts_list = group.posts.select_related(
+        'author', 'group', 'author__profile').prefetch_related(
+        'comments', 'comments__author').all()
     page_obj = create_paginator(request, posts_list, POST_LIMIT)
 
     template = 'posts/group_list.html'
@@ -48,7 +54,9 @@ def group_post(request, slug):
 def profile(request, username):
     """Page of user profile."""
     author = get_user_object(username)
-    posts = author.posts.all()
+    posts = author.posts.select_related(
+        'author', 'group', 'author__profile').prefetch_related(
+        'comments', 'comments__author').all()
     post_count = posts.count()
     page_obj = create_paginator(request, posts, POST_LIMIT)
     username = request.user.username
@@ -137,7 +145,9 @@ def post_edit(request, post_id):
 def follow_index(request):
     """Page show posts of the authors that the user is following."""
     user = request.user
-    posts_list = Post.objects.filter(author__following__user=user)
+    posts_list = Post.objects.select_related(
+        'author', 'group', 'author__profile').prefetch_related(
+        'comments', 'comments__author').filter(author__following__user=user)
     page_obj = create_paginator(request, posts_list, POST_LIMIT)
     return render(request, 'posts/follow.html', {'page_obj': page_obj})
 
