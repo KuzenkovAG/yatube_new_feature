@@ -59,7 +59,7 @@ header {
 	        Body
 \*----------------------------*/
 
-main {
+body {
     background-color: #f4f4f4;
 }
 
@@ -168,7 +168,7 @@ main {
 
 .aside-post-detail {
     position: sticky;
-    top: 60px;
+    top: 70px;
     height: 470px;
     margin-top: 1%;
 }

@@ -120,7 +120,7 @@
         </div>
 
         <div class="likes-tag">
-          {% if post.likes %}
+          {% if user in post.user_likes.all %}
           <a href="{% url 'posts:dislike' post.id %}">
             <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIEdlbmVyYXRvcjogU1ZHIFJlcG8gTWl4ZXIgVG9vbHMgLS0+Cjxzdmcgd2lkdGg9IjgwMHB4IiBoZWlnaHQ9IjgwMHB4IiB2aWV3Qm94PSIwIDAgMTIgMTIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDEyIDEyIiBpZD0i0KHQu9C+0LlfMSIgdmVyc2lvbj0iMS4xIiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNOC41LDFDNy41MjA2Mjk5LDEsNi42MzUyNTM5LDEuNDAyMjIxNyw2LDIuMDUwNDc2MUM1LjM2NDgwNzEsMS40MDIyODI3LDQuNDc5MzcwMSwxLDMuNSwxICBDMS41NjcwMTY2LDEsMCwyLjU2NzAxNjYsMCw0LjVTMiw4LDYsMTFjNC0zLDYtNC41NjcwMTY2LDYtNi41UzEwLjQzMjk4MzQsMSw4LjUsMXoiIGZpbGw9IiMxRDFEMUIiLz48L3N2Zz4="
                  alt="" width="24">
