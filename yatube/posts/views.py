@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_page
 from django.urls import reverse, reverse_lazy
+from hitcount.views import HitCountDetailView
 
 from .forms import CommentForm, PostForm
 from .models import Follow, Group, Post
@@ -23,13 +24,13 @@ def post_owner_only(func):
     return check_owner
 
 
-@cache_page(1, key_prefix="index_page")
+@cache_page(2, key_prefix="index_page")
 def index(request):
     """Main page."""
     template = 'posts/index.html'
     posts_list = Post.objects.select_related(
         'author', 'group', 'author__profile').prefetch_related(
-        'comments', 'comments__author', 'user_likes').all()
+        'comments', 'comments__author', 'user_likes', 'hit_count_generic').all()
     page_obj = create_paginator(request, posts_list, POST_LIMIT)
     return render(request, template, {'page_obj': page_obj})
 
@@ -71,20 +72,31 @@ def profile(request, username):
     return render(request, 'posts/profile.html', context)
 
 
-def post_detail(request, post_id):
-    """Page of post detail."""
-    post = get_object_or_404(Post, id=post_id)
-    form = CommentForm()
-    post_count = post.author.posts.count()
-    comments = post.comments.select_related('author').all()
+class PostDetailView(HitCountDetailView):
+    model = Post
+    template_name = 'posts/post_detail.html'
+    context_object_name = 'post'
+    slug_field = 'post_id'
+    count_hit = True
 
-    context = {
-        'post': post,
-        'post_count': post_count,
-        'comments': comments,
-        'form': form
-    }
-    return render(request, 'posts/post_detail.html', context)
+    def get_object(self, queryset=None):
+        post_id = self.kwargs.get('post_id')
+        obj = get_object_or_404(
+            Post.objects.select_related(
+                'author', 'author__profile', 'group').prefetch_related(
+                'comments', 'comments__author'
+            ),
+            id=post_id
+        )
+        return obj
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        form = CommentForm()
+        post_count = self.object.author.posts.count()
+        context['post_count'] = post_count
+        context['form'] = form
+        return context
 
 
 @login_required

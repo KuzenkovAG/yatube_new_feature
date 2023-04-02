@@ -1,7 +1,8 @@
-  {% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% load thumbnail %}
 {% load user_filters %}
+{% load hitcount_tags %}
 
 {% block title %}
 Пост {{ post.text|slice:30 }}
@@ -119,7 +120,7 @@
         </div>
 
         <div class="likes-tag">
-          {% if user in post.user_likes.all %}
+          {% if post.likes %}
           <a href="{% url 'posts:dislike' post.id %}">
             <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhLS0gVXBsb2FkZWQgdG86IFNWRyBSZXBvLCB3d3cuc3ZncmVwby5jb20sIEdlbmVyYXRvcjogU1ZHIFJlcG8gTWl4ZXIgVG9vbHMgLS0+Cjxzdmcgd2lkdGg9IjgwMHB4IiBoZWlnaHQ9IjgwMHB4IiB2aWV3Qm94PSIwIDAgMTIgMTIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDEyIDEyIiBpZD0i0KHQu9C+0LlfMSIgdmVyc2lvbj0iMS4xIiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNOC41LDFDNy41MjA2Mjk5LDEsNi42MzUyNTM5LDEuNDAyMjIxNyw2LDIuMDUwNDc2MUM1LjM2NDgwNzEsMS40MDIyODI3LDQuNDc5MzcwMSwxLDMuNSwxICBDMS41NjcwMTY2LDEsMCwyLjU2NzAxNjYsMCw0LjVTMiw4LDYsMTFjNC0zLDYtNC41NjcwMTY2LDYtNi41UzEwLjQzMjk4MzQsMSw4LjUsMXoiIGZpbGw9IiMxRDFEMUIiLz48L3N2Zz4="
                  alt="" width="24">
@@ -138,18 +139,18 @@
           <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPg0KPHN2ZyB3aWR0aD0iODAwcHgiIGhlaWdodD0iODAwcHgiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iIzAwMDAwMCIgZD0iTTUxMiAxNjBjMzIwIDAgNTEyIDM1MiA1MTIgMzUyUzgzMiA4NjQgNTEyIDg2NCAwIDUxMiAwIDUxMnMxOTItMzUyIDUxMi0zNTJ6bTAgNjRjLTIyNS4yOCAwLTM4NC4xMjggMjA4LjA2NC00MzYuOCAyODggNTIuNjA4IDc5Ljg3MiAyMTEuNDU2IDI4OCA0MzYuOCAyODggMjI1LjI4IDAgMzg0LjEyOC0yMDguMDY0IDQzNi44LTI4OC01Mi42MDgtNzkuODcyLTIxMS40NTYtMjg4LTQzNi44LTI4OHptMCA2NGEyMjQgMjI0IDAgMSAxIDAgNDQ4IDIyNCAyMjQgMCAwIDEgMC00NDh6bTAgNjRhMTYwLjE5MiAxNjAuMTkyIDAgMCAwLTE2MCAxNjBjMCA4OC4xOTIgNzEuNzQ0IDE2MCAxNjAgMTYwczE2MC03MS44MDggMTYwLTE2MC03MS43NDQtMTYwLTE2MC0xNjB6Ii8+PC9zdmc+"
                alt="" width="24"
           >
-          0
+          {{ post.hit_count_generic.all.0.hits }}
         </div>
       </div>
 
       <hr>
       <h6 class="comment-header">Комментарии:</h6>
-      {% if not comments %}
+      {% if not post.comments.all %}
       <p>Комментариев еще нет, {% if not user.is_authenticated %}
         <a href="{% url 'users:login' %}">авторизуйтесь</a> и{% endif %} оставьте тут свой.</p>
       {% endif %}
 
-      {% for comment in comments %}
+      {% for comment in post.comments.all %}
       <div class="media mb-4">
         <div class="media-body">
           <p class="comment-owner">
@@ -189,4 +190,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}

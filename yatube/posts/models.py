@@ -1,6 +1,9 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
+from hitcount.models import HitCount
+
 from core.models import ModelWithDate
 
 User = get_user_model()
@@ -32,7 +35,7 @@ class Group(models.Model):
 
 
 class Post(ModelWithDate):
-    """Post which user create."""
+    """Post of user."""
     text = models.TextField(
         verbose_name='Текст поста',
         help_text="Текст нового поста"
@@ -59,6 +62,11 @@ class Post(ModelWithDate):
     )
     likes = models.PositiveIntegerField(default=0)
     user_likes = models.ManyToManyField(User)
+    hit_count_generic = GenericRelation(
+        HitCount,
+        object_id_field='object_pk',
+        related_query_name='hit_count_generic_relation'
+    )
 
     class Meta:
         ordering = ("-created",)

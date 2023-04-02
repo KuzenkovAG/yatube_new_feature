@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'debug_toolbar',
     'django_rename_app',
+    'hitcount',
 ]
 
 MIDDLEWARE = [
