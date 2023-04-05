@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic import RedirectView
 
 
 def bad_request(request, exception):
@@ -19,3 +20,11 @@ def page_not_found(request, exception):
 
 def server_error(request):
     return render(request, 'core/500.html', status=500)
+
+
+class LastPageRedirectView(RedirectView):
+    """Redirect on last page."""
+    http_method_names = ('get',)
+
+    def get_redirect_url(self, *args, **kwargs):
+        return self.request.META.get('HTTP_REFERER')

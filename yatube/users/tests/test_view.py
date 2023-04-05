@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from users.forms import CreationForm
+from users.forms import CustomUserCreationForm
 
 User = get_user_model()
 
@@ -18,4 +18,7 @@ class TestView(TestCase):
     def test_form_creating_user(self):
         response = self.guest_user.get(reverse('users:signup'))
         self.assertTemplateUsed(response, 'users/signup.html')
-        self.assertIsInstance(response.context.get('form'), CreationForm)
+        self.assertIsInstance(
+            response.context.get('form'),
+            CustomUserCreationForm
+        )
