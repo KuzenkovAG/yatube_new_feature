@@ -1,4 +1,4 @@
-{% extends 'account/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% load user_filters %}
 
@@ -6,63 +6,72 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-  <p>
-    Имя:
-    {% if user.first_name %}
-    {{ user.first_name }}
-    {% else %}
-    <i>не указано</i>
-    {% endif %}
-  </p>
+<div class="container pofile-body">
+  <div class="row">
+    <aside class="profile-aside col-sm-12 col-md-2">
+      {% include 'account/includes/aside_block.html' %}
+    </aside>
+    <div class="col-sm-12 col-md-10">
+      <div class="container">
+        <p>
+          Имя:
+          {% if user.first_name %}
+          {{ user.first_name }}
+          {% else %}
+          <i>не указано</i>
+          {% endif %}
+        </p>
 
-  <p>Фамилия:
-    {% if user.last_name %}
-    {{ user.last_name }}
-    {% else %}
-    <i>не указано</i>
-    {% endif %}
-  </p>
-  <p>Логин: {{ user.username }}</p>
-  <p>email:
-    {% if user.email %}
-    {{ user.email|protect_mail }}
-    {% else %}
-    <i>не указано</i>
-    {% endif %}
-  </p>
-  <a href="{% url 'account:edit' %}" class="btn btn-primary btn-sm">
-    Изменить данные
-  </a>
-  <hr>
-  <p>Пароль: ******** </p>
-  <a href="{% url 'users:password_change' %}" class="btn btn-primary btn-sm">
-    Изменить пароль
-  </a>
-  <hr>
-  <p>О себе:
-    {% if user.profile.bio %}
-    {{ user.profile.bio }}
-    {% else %}
-    <i>не указано</i>
-    {% endif %}
-  </p>
-  <p>Город:
-    {% if user.profile.location %}
-    {{ user.profile.location }}
-    {% else %}
-    <i>не указано</i>
-    {% endif %}
-  </p>
-  <p>Дата рождения:
-    {% if user.profile.birth_date %}
-    {{ user.profile.birth_date }}
-    {% else %}
-    <i>не указано</i>
-    {% endif %}
-  </p>
-    <a href="{% url 'account:edit_profile' %}" class="btn btn-primary btn-sm">
-      Изменить данные
-    </a>
+        <p>Фамилия:
+          {% if user.last_name %}
+          {{ user.last_name }}
+          {% else %}
+          <i>не указано</i>
+          {% endif %}
+        </p>
+        <p>Логин: {{ user.username }}</p>
+        <p>email:
+          {% if user.email %}
+          {{ user.email|protect_mail }}
+          {% else %}
+          <i>не указано</i>
+          {% endif %}
+        </p>
+        <a href="{% url 'account:edit' %}" class="btn btn-primary btn-sm">
+          Изменить данные
+        </a>
+        <hr>
+        <p>Пароль: ******** </p>
+        <a href="{% url 'users:password_change' %}" class="btn btn-primary btn-sm">
+          Изменить пароль
+        </a>
+        <hr>
+        <p>О себе:
+          {% if user.profile.bio %}
+          {{ user.profile.bio }}
+          {% else %}
+          <i>не указано</i>
+          {% endif %}
+        </p>
+        <p>Город:
+          {% if user.profile.location %}
+          {{ user.profile.location }}
+          {% else %}
+          <i>не указано</i>
+          {% endif %}
+        </p>
+        <p>Дата рождения:
+          {% if user.profile.birth_date %}
+          {{ user.profile.birth_date }}
+          {% else %}
+          <i>не указано</i>
+          {% endif %}
+        </p>
+        <a href="{% url 'account:edit_profile' %}" class="btn btn-primary btn-sm">
+          Изменить данные
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

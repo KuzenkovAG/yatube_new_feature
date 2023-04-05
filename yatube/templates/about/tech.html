@@ -9,7 +9,7 @@
     <aside class="col-12 col-md-3" id="tech-aside">
       <div id="tech-list">
         <ul class="list-group list-group-flush">
-          <div id="list-example" class="list-group">
+          <div id="list-example" class="list-group border-rounded">
             <a class="list-group-item list-group-item-action" href="#list-item-1">
               Python
             </a>
@@ -19,98 +19,66 @@
             <a class="list-group-item list-group-item-action" href="#list-item-3">
               Bootstrap
             </a>
+            <a class="list-group-item list-group-item-action" href="#list-item-4">
+              Возможности сайта
+            </a>
           </div>
         </ul>
       </div>
     </aside>
 
     <article class="col-12 col-md-9">
-      <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" class="scrollspy-example">
-        <h4 id="list-item-1">Python 3.9</h4>
-        <p>
-          Документация - <a href="https://docs.python.org/3.9/" target="_blank">eng</a><br>
-          Стиль кода - <a href="https://peps.python.org/pep-0008/" target="_blank">PEP8</a><br>
-          Backend сайта создан с помощью фреймворка Django
-          <br><br><br>
-        </p>
-        <h4 id="list-item-2">Django 2.2.6</h4>
-        <p>
-          Документация - <a href="https://docs.djangoproject.com/en/2.2/" target="_blank">eng</a><br>
-        </p>
-        <h5>Приложения</h5>
-        Функционал сайта разбит на приложения:
-        <ul>
-          <li>posts (отвечает за отображение, создание, изменение постов)</li>
-          <li>users (авторизация и регистрация пользователей)</li>
-          <li>about (отображение информационных страниц)</li>
-          <li>core (храниллище контекст процессоров, пользовательских фильтров)</li>
-        </ul>
-        <h5>Приложение posts</h5>
-        <p>
+      <div class="border-rounded">
+        <div data-bs-spy="scroll" data-bs-target="#list-example"
+             data-bs-offset="0" class="scrollspy-example tech-body">
+          <h4 id="list-item-1">Python 3.9</h4>
+          <p>
+            Документация - <a href="https://docs.python.org/3.9/" target="_blank">eng</a>
+          </p>
+          <br>
+          <h4 id="list-item-2">Django 2.2.6</h4>
+          <p>
+            Документация - <a href="https://docs.djangoproject.com/en/2.2/" target="_blank">eng</a><br>
+          </p>
+          <br>
+          <h4 id="list-item-3">Bootstrap 5</h4>
+          <p>
+            Документация - <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/" target="_blank">eng</a><br>
+          </p>
+          <br><br>
+          <h4 id="list-item-4">Возможности сайта</h4>
           <b>Публикация поста</b><br>
-          Посты могут публиковать только авторизованные пользователи
-          <i>@login_required</i>. <br>
+          Посты могут публиковать только авторизованные пользователи.<br>
           <b>Изменение поста</b><br>
           Пост может изменить только пользователь, создавший пост. <br>
-        </p>
-        <h5>Приложение Users</h5>
-        <p class="low-margin">
-          Приложение позволяет осуществлять:
-        <ul>
-        <li>Вход пользователя</li>
-        <li>Выход пользователя</li>
-        <li>Регистрацию пользователя</li>
-        <li>Смену пароля (для авторизоанных пользователей)</li>
-        <li>Сброс пароля через почту (для неавторизованных пользователей)</li>
-      </ul>
-        </p>
-        <h5>Приложение About</h5>
-        <p>
-          Приложение используется для отображения статических информационных страниц
-        </p>
-        <h6>URL:</h6>
-        <code>
-          <pre>
-about/author/         - страница об авторе
-about/tech/           - страница о технологии сайта
-          </pre>
-        </code>
-
-        <h4 id="list-item-3">Bootstrap 5</h4>
-        <p>
-          Документация - <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/" target="_blank">eng</a><br>
-        </p>
-        <h5>Использованные компоненты</h5>
-        <ul>
-          <li>
-            Навигационная панель -
-            <a href="https://getbootstrap.com/docs/5.0/components/navbar/#image-and-text" target="_blank">eng</a>
-          </li>
-          <li>
-            Адаптивная навигационная панель -
-            <a href="https://getbootstrap.com/docs/5.0/components/navbar/#external-content" target="_blank">eng</a>
-          </li>
-          <li>
-            Списки -
-            <a href="https://getbootstrap.com/docs/5.0/components/card/#list-groups" target="_blank">eng</a>
-          </li>
-          <li>
-            Карточки -
-            <a href="https://getbootstrap.com/docs/5.0/components/card/#images" target="_blank">eng</a>
-          </li>
-          <li>
-            Пагинатор -
-            <a href="https://getbootstrap.com/docs/5.0/components/pagination/#overview" target="_blank">eng</a>
-          </li>
-          <li>
-            Кнопки -
-            <a href="https://getbootstrap.com/docs/5.0/components/buttons/#examples" target="_blank">eng</a>
-          </li>
-          <li>
-            Формы -
-            <a href="https://getbootstrap.com/docs/5.0/forms/overview/#overview" target="_blank">eng</a>
-          </li>
-        </ul>
+          <b>Создание комментариев к посту</b><br>
+          Комментарии могут оставлять только авторизованные пользователи. <br>
+          <b>Подписка на других пользователей</b><br>
+          Подписка дает возможность просмотра постов авторов, на которых
+          подписан пользователь. <br><br>
+          <b>Лайки постов</b><br>
+          Пользователи могут оставлять лайки для понравившихся постов. <br>
+          <b>Количество просмотров постов</b><br>
+          Увеличивается при просмотре поста целиком. <br><br>
+          <b>Группы</b><br>
+          Возможность просмотров постов по группам. <br><br>
+          </p>
+          <h5>Работа с пользователем</h5>
+          <p class="low-margin">
+          <ul>
+          <li>Регистрация пользователя;</li>
+          <li>Авторизация пользователя;</li>
+          <li>Смена пароля (для авторизоанных пользователей);</li>
+          <li>Сброс пароля через почту (для неавторизованных пользователей);</li>
+          </ul>
+          <h5>Личный кабинет для установки/изменения:</h5>
+          <ul>
+            <li>Личных данных (имя, фамилия, почта);</li>
+            <li>Аватара пользователя;</li>
+            <li>Персональных данных (дата родждения и др.).</li>
+          </ul>
+          </p>
+        </div>
       </div>
     </article>
   </div>

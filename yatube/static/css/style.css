@@ -1,6 +1,4 @@
 
-
-
 /*----layout---*/
 .layout.basic>* {
   position: absolute;
@@ -12,15 +10,11 @@ a {
     font-weight: 500;
 }
 
-.selectable {
-}
-
-.selectable:hover {
-
-}
-
 .border-rounded {
     border-radius:12px;
+    border:0.1px solid #d2d2d2;
+    background-color: #fff;
+
 }
 
 /*----------------------------*\
@@ -36,23 +30,28 @@ header {
 }
 
 .nav-pills .nav-link.active {
-    background-color: #4d95ff;
+    background-color: #fea300;
+    color: #50565f;
 }
 
 .nav .nav-item a {
     color: #50565f;
 }
 
-.navbar a {
-    color: #50565f;
-}
-
 .nav .nav-item a:hover {
-    color: #4b73f8;
+    color: #1c1d1f;
 }
 
 .navbar li {
     list-style: none;
+}
+
+.navbar a {
+    color: #50565f;
+}
+
+.navbar a:hover {
+    color: #1c1d1f;
 }
 
 /*----------------------------*\
@@ -60,27 +59,33 @@ header {
 \*----------------------------*/
 
 body {
-    background-color: #f4f4f4;
+  background-color: #f4f4f4;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .pagination {
     margin: auto;
 }
 
-.wrap_images img
-{
+.wrap_images img {
     width: 100%;
     height: auto;
 }
+
+main {
+  margin-top: 50px;
+}
+
 
 /*--------------------*\
     Footer
 \*--------------------*/
 
-.footer {
-    background-color: #f4f4f4;
+.page-footer {
+  margin-top: auto;
 }
-
 
 /*--------------------*\
     Print Post
@@ -207,7 +212,6 @@ body {
 -----------------*/
 
 .pofile-body {
-    margin-top: 60px;
     margin-bottom: 10px;
 }
 
@@ -230,11 +234,6 @@ body {
 /*----------------------------*\
 	        About
 \*----------------------------*/
-
-#about-form {
-    background-image: url(../img/fon-author.jpg) repeat-y;
-    margin-top:60px;
-}
 
 #img-author {
     height: 30vh;
@@ -294,12 +293,18 @@ body {
 .scrollspy-example {
     position: relative;
     height: 70vh;
-    margin-top: 0.5rem;
+    margin: 1rem 0.5rem 0.5rem 1rem;
     overflow: auto;
 }
 
 .low-margin {
     margin: 0px;
+}
+
+.list-group-item-action.active {
+  background-color: #fea300;
+  color: #50565f;
+  border-color: #ce8400;
 }
 
 /*----------------------------*\

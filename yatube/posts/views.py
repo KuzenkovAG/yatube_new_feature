@@ -148,6 +148,11 @@ class PostCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy('posts:profile', args=[self.request.user.username])
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Создать пост'
+        return context
+
 
 @method_decorator([login_required, post_owner_only], name='dispatch')
 class PostUpdateView(UpdateView):

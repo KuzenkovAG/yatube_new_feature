@@ -1,4 +1,4 @@
-{% extends 'account/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}
@@ -6,50 +6,60 @@
 {% endblock %}
 
 {% block content %}
-<table class="table">
-  <thead>
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">Подписчик</th>
-    <th scope="col"></th>
-  </tr>
-  </thead>
-  <tbody>
-  {% if followers %}
-  {% for follower, is_followed in related_follows.items %}
-  <tr>
-    <th scope="row">{{ forloop.counter }}</th>
-    <td>
-      <a href="{% url 'posts:profile' follower.user.username %}">
-        {% if follower.user.first_name or follower.user.last_name %}
-        {{ follower.user.first_name }} {{ follower.user.last_name }}
+
+<div class="container pofile-body">
+  <div class="row">
+    <aside class="profile-aside col-sm-12 col-md-2">
+      {% include 'account/includes/aside_block.html' %}
+    </aside>
+    <div class="col-sm-12 col-md-10">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Подписчик</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if followers %}
+        {% for follower, is_followed in related_follows.items %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>
+            <a href="{% url 'posts:profile' follower.user.username %}">
+              {% if follower.user.first_name or follower.user.last_name %}
+              {{ follower.user.first_name }} {{ follower.user.last_name }}
+              {% else %}
+              {{ follower.user.username }}
+              {% endif %}
+            </a>
+          </td>
+          <td>
+            {% if is_followed %}
+            <a href="{% url 'posts:profile_unfollow' follower.user.username %}"
+               class="btn btn-light btn-sm" role="button"
+            >
+              Отписаться
+            </a>
+            {% else %}
+            <a href="{% url 'posts:profile_follow' follower.user.username %}"
+               class="btn btn-primary btn-sm" role="button"
+            >
+              Подписаться в ответ
+            </a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
         {% else %}
-        {{ follower.user.username }}
+        <tr>
+          <td colspan="3">На вас пока никто не подписан. Размещайте больше интересных постов</td>
+        </tr>
         {% endif %}
-      </a>
-    </td>
-    <td>
-      {% if is_followed %}
-      <a href="{% url 'posts:profile_unfollow' follower.user.username %}"
-         class="btn btn-light btn-sm" role="button"
-      >
-        Отписаться
-      </a>
-      {% else %}
-      <a href="{% url 'posts:profile_follow' follower.user.username %}"
-         class="btn btn-primary btn-sm" role="button"
-      >
-        Подписаться в ответ
-      </a>
-      {% endif %}
-    </td>
-  </tr>
-  {% endfor %}
-  {% else %}
-  <tr>
-    <td colspan="3">На вас пока никто не подписан. Размещайте больше интересных постов</td>
-  </tr>
-  {% endif %}
-  </tbody>
-</table>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock %}

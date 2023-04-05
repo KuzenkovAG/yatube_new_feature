@@ -1,4 +1,4 @@
-{% extends 'account/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}
@@ -6,43 +6,52 @@
 {% endblock %}
 
 {% block content %}
-
-<table class="table">
-  <thead>
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">Автор</th>
-    <th scope="col"></th>
-  </tr>
-  </thead>
-  <tbody>
-  {% if authors %}
-  {% for author in authors %}
-  <tr>
-    <th scope="row">{{ forloop.counter }}</th>
-    <td>
-      <a href="{% url 'posts:profile' author.user.username %}">
-        {% if author.author.first_name or author.author.last_name %}
-        {{ author.author.first_name }} {{ author.author.last_name }}
+<div class="container pofile-body">
+  <div class="row">
+    <aside class="profile-aside col-sm-12 col-md-2">
+      {% include 'account/includes/aside_block.html' %}
+    </aside>
+    <div class="col-sm-12 col-md-10">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Автор</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if authors %}
+        {% for author in authors %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>
+            <a href="{% url 'posts:profile' author.user.username %}">
+              {% if author.author.first_name or author.author.last_name %}
+              {{ author.author.first_name }} {{ author.author.last_name }}
+              {% else %}
+              {{ author.author.username }}
+              {% endif %}
+            </a>
+          </td>
+          <td>
+            <a href="{% url 'posts:profile_unfollow' author.author.username %}"
+               class="btn btn-light btn-sm" role="button"
+            >
+              Отписаться
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
         {% else %}
-        {{ author.author.username }}
+        <tr>
+          <td scope="row" colspan="3">Вы пока ни на кого не подписаны</td>
+        </tr>
         {% endif %}
-      </a>
-    </td>
-    <td>
-      <a href="{% url 'posts:profile_unfollow' author.author.username %}"
-         class="btn btn-light btn-sm" role="button"
-      >
-        Отписаться
-      </a>
-    </td>
-  </tr>
-  {% endfor %}
-  {% else %}
-  <tr>
-    <td scope="row" colspan="3">Вы пока ни на кого не подписаны</td>
-  </tr>
-  {% endif %}
-  </tbody>
-</table>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
