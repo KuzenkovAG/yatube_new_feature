@@ -24,7 +24,7 @@
         </a>
       </div>
       <div class="post-created-date">
-        {{ post.created|date:"d E Y" }}
+        {{ post.created|date:"d E Y H:i:s" }}
       </div>
       {% if request.resolver_match.view_name != 'posts:group_list' %}
       {% if post.group %}

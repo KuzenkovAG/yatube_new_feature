@@ -292,7 +292,7 @@ main {
 
 .scrollspy-example {
     position: relative;
-    height: 70vh;
+    height: 65vh;
     margin: 1rem 0.5rem 0.5rem 1rem;
     overflow: auto;
 }

@@ -23,7 +23,7 @@ def server_error(request):
 
 
 class LastPageRedirectView(RedirectView):
-    """Redirect on last page."""
+    """Redirect on previous page."""
     http_method_names = ('get',)
 
     def get_redirect_url(self, *args, **kwargs):

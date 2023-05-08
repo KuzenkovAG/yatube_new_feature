@@ -163,4 +163,4 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 # Post setting
 POST_LIMIT_ON_PAGE = 10
-SHORT_TEXT_LENGTH = 15
+STR_VIEW_TEXT_LENGTH = 15

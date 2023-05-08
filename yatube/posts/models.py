@@ -7,8 +7,8 @@ from hitcount.models import HitCount
 from core.models import ModelWithDate
 
 User = get_user_model()
-SHORT_TEXT_LENGTH = settings.SHORT_TEXT_LENGTH
-LAST_COMMENTS = 3
+STR_VIEW_TEXT_LENGTH = settings.STR_VIEW_TEXT_LENGTH
+VIEW_LAST_COMMENTS = 3
 
 
 class Group(models.Model):
@@ -72,7 +72,7 @@ class Post(ModelWithDate):
         ordering = ("-created",)
 
     def __str__(self):
-        return self.text[:SHORT_TEXT_LENGTH]
+        return self.text[:STR_VIEW_TEXT_LENGTH]
 
     def get_length(self):
         return len(self.text)
@@ -80,9 +80,9 @@ class Post(ModelWithDate):
     def get_last_comments(self):
         """Get last comments."""
         count = self.comments.count()
-        if count <= LAST_COMMENTS:
+        if count <= VIEW_LAST_COMMENTS:
             return self.comments.all()
-        return self.comments.all()[count - LAST_COMMENTS:]
+        return self.comments.all()[count - VIEW_LAST_COMMENTS:]
 
 
 class Comment(ModelWithDate):
@@ -105,7 +105,7 @@ class Comment(ModelWithDate):
     )
 
     def __str__(self):
-        return self.text[:SHORT_TEXT_LENGTH]
+        return self.text[:STR_VIEW_TEXT_LENGTH]
 
 
 class Follow(models.Model):

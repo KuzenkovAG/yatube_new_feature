@@ -4,10 +4,11 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, ListView, UpdateView
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from hitcount.views import HitCountDetailView
 
+from .decorators import post_owner_only
 from .forms import CommentForm, PostForm
 from .models import Follow, Group, Post
 from .utils import get_user_object
@@ -17,18 +18,7 @@ POST_LIMIT = settings.POST_LIMIT_ON_PAGE
 User = get_user_model()
 
 
-def post_owner_only(func):
-    """Check post owner."""
-    def check_owner(request, post_id, *args, **kwargs):
-        author = request.user
-        if author.posts.filter(id=post_id).exists():
-            return func(request, post_id, *args, **kwargs)
-        return redirect(reverse_lazy('posts:post_detail', args=[post_id]))
-    return check_owner
-
-
-# @cache_page(2, key_prefix="index_page")
-@method_decorator(cache_page(2), name='dispatch')
+@method_decorator(cache_page(5), name='dispatch')
 class IndexListView(ListView):
     """Index page."""
     template_name = 'posts/index.html'
@@ -80,13 +70,14 @@ class ProfileListView(ListView):
         ).all()
         return queryset
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, object_list=None, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         username = self.kwargs.get('username')
         author = get_object_or_404(User, username=username)
         context['author'] = author
-        following = author.following.filter(user=self.request.user)
-        context['following'] = following
+        if self.request.user.is_authenticated:
+            following = author.following.filter(user=self.request.user)
+            context['following'] = following
         return context
 
 
@@ -220,7 +211,7 @@ class UnFollowRedirectView(LastPageRedirectView):
 
 @method_decorator(login_required, name='dispatch')
 class LikeRedirectView(LastPageRedirectView):
-    """Add like on post."""
+    """Add like for post."""
     def get(self, request, *args, **kwargs):
         user = get_object_or_404(User, id=request.user.id)
         post = get_object_or_404(Post, id=kwargs.get('post_id'))
@@ -233,7 +224,7 @@ class LikeRedirectView(LastPageRedirectView):
 
 @method_decorator(login_required, name='dispatch')
 class DislikeRedirectView(LastPageRedirectView):
-    """Add like on post."""
+    """Remove like for post."""
     def get(self, request, *args, **kwargs):
         user = get_object_or_404(User, id=request.user.id)
         post = get_object_or_404(Post, id=kwargs.get('post_id'))

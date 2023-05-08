@@ -11,5 +11,6 @@ def addclass(field, css):
 
 @register.filter
 def protect_mail(email):
+    """Hide part of mail."""
     index = email.index('@')
     return email[:1] + '*****' + email[index:]

@@ -49,7 +49,7 @@ class PostModelTest(TestCase):
         """Check str representation of long post."""
         self.assertEqual(
             str(PostModelTest.post_long),
-            self.post_text_long[:settings.SHORT_TEXT_LENGTH],
+            self.post_text_long[:settings.STR_VIEW_TEXT_LENGTH],
             'Ошибка метода str в модели post при отображении длинного текста'
         )
 
