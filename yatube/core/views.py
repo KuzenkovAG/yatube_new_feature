@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import RedirectView
+from django.urls import reverse_lazy
 
 
 def bad_request(request, exception):
@@ -27,4 +28,5 @@ class LastPageRedirectView(RedirectView):
     http_method_names = ('get',)
 
     def get_redirect_url(self, *args, **kwargs):
-        return self.request.META.get('HTTP_REFERER')
+        return self.request.META.get('HTTP_REFERER') or reverse_lazy(
+            'posts:index')

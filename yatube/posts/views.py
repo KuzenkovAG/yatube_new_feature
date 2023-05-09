@@ -160,7 +160,10 @@ class PostUpdateView(UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('posts:profile', args=[self.request.user.username])
+        return reverse_lazy(
+            'posts:post_detail',
+            args=[self.kwargs.get('post_id')]
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

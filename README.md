@@ -1,8 +1,8 @@
-# Yatube New Features
+# Yatube v.1.0.0 New Features
 Social network. 
 
 ### Deploy on server
-[Link] <- current working version 
+[PythonAnyWhere] <- current working version 
 
 ## Features
 - Signup and login.
@@ -17,37 +17,44 @@ Social network.
 - Post have likes.
 - New design of pages.
 
-## History
-- [Now] <- You are here
-- [Yatube final] Add ability to follow users
-- [Yatube unittest] Create tests. Add comments for posts.
-- [Yatube forms] Add ability to create new posts; Add registration of User.
-- [Yatube comunity] Add ability to view post.
+## History of Yatube project
+- v.1.0.0 [New Features] <- You are here
+- v.0.4.0 [Final]  - Add ability to follow users
+- v.0.3.0 [UnitTest] - Create tests. Add comments for posts.
+- v.0.2.0 [Forms] - Add ability to create new posts; Add registration of User.
+- v.0.1.0 [Community] - Add ability to view post.
 
 ## Tech
 - Python 3.9
 - Django 2.2
 
-## Requirements
+#### Tested Python version
 Python 3.7-3.9
 
 
 ## Installation (for Windows)
-1. Clone repository on your PC
+Clone repository
 ```sh
-git clone ...
+git clone git@github.com:KuzenkovAG/yatube_new_feature.git
 ```
-2. Install vertual enviroment
+Install environment
 ```sh
-py -3.9 -m venv venv
+python -m venv venv
 ```
-3. Install requirements
+Activate environment
+```sh
+source venv/Script/activate
+```
+Install requirements
 ```sh
 pip install -r requirements.txt
 ```
-4. Make migrations and run server
+Make migrations and run server
 ```sh
 python manage.py migrate
+```
+Run server
+```sh
 python manage.py runserver
 ```
 
@@ -87,11 +94,11 @@ http://127.0.0.1:8000/account/
 ## Author
 [Alexey Kuzenkov]
 
-   [link]: <https://alexey241390.pythonanywhere.com/>
+   [PythonAnyWhere]: <https://alexey241390.pythonanywhere.com/>
 
    [Alexey Kuzenkov]: <https://github.com/KuzenkovAG>
-   [Now]: <https://github.com/KuzenkovAG/yatube_new_feature>
-   [Yatube final]: <https://github.com/KuzenkovAG/yatube_final>
-   [Yatube unittest]: <https://github.com/KuzenkovAG/yatube_tests>
-   [Yatube forms]: <https://github.com/KuzenkovAG/yatube_forms>
-   [Yatube comunity]: <https://github.com/KuzenkovAG/yatube_community>
+   [New Features]: <https://github.com/KuzenkovAG/yatube_new_feature>
+   [Final]: <https://github.com/KuzenkovAG/yatube_final>
+   [UnitTest]: <https://github.com/KuzenkovAG/yatube_tests>
+   [Forms]: <https://github.com/KuzenkovAG/yatube_forms>
+   [Community]: <https://github.com/KuzenkovAG/yatube_community>

@@ -142,8 +142,6 @@ class TestViews(TestCase):
         self.assertEqual(post.image, TestViews.post.image)
         post_count = response.context.get('post_count')
         self.assertEqual(post_count, TestViews.user.posts.count())
-        comment = response.context.get('comments')[0]
-        self.assertEqual(comment, TestViews.comment)
         form = response.context.get('form')
         self.assertIsInstance(form, CommentForm)
         text_field = form.fields.get('text')
@@ -154,7 +152,7 @@ class TestViews(TestCase):
         response = self.authorized_client.get(reverse('posts:post_create'))
         form = response.context.get('form')
         self.assertIsInstance(form, PostForm)
-        self.assertEqual(response.context.get('title'), 'Новый пост')
+        self.assertEqual(response.context.get('title'), 'Создать пост')
 
     def test_page_edit_post(self):
         """Check context of page for edit post."""

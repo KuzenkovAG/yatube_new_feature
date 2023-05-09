@@ -104,10 +104,10 @@ class PostFromTest(TestCase):
             data=PostFromTest.form_content_edited_post,
             folow=True,
         )
-        self.assertRedirects(response, reverse(
-            'posts:post_detail',
-            args=[PostFromTest.post.id]
-        ))
+        self.assertRedirects(
+            response,
+            reverse('posts:post_detail', args=[PostFromTest.post.id])
+        )
         self.assertEqual(
             get_posts_count(),
             initial_post_count,
