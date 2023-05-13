@@ -18,7 +18,7 @@ POST_LIMIT = settings.POST_LIMIT_ON_PAGE
 User = get_user_model()
 
 
-@method_decorator(cache_page(5), name='dispatch')
+@method_decorator(cache_page(1), name='dispatch')
 class IndexListView(ListView):
     """Index page."""
     template_name = 'posts/index.html'
