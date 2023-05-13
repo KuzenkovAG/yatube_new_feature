@@ -39,7 +39,10 @@ git clone git@github.com:KuzenkovAG/yatube_new_feature.git
 ```
 Install environment
 ```sh
-python -m venv venv
+cd yatube_new_feature/
+```
+```sh
+py -3.9 -m venv venv
 ```
 Activate environment
 ```sh
@@ -48,6 +51,15 @@ source venv/Scripts/activate
 Install requirements
 ```sh
 pip install -r requirements.txt
+```
+Create .env
+```sh
+touch yatube/yatube/.env
+```
+Open .env and save secret key
+```sh
+nano yatube/yatube/.env
+DJANGO_SECRET_KEY = 'as!b)khi$*#wm!!&@=+^vzve^u&9o%0fsxn7fkfu$1x-)2on^h'
 ```
 Make migrate
 ```sh
